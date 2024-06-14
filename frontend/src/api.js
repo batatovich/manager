@@ -70,7 +70,7 @@ export const fetchAllEntries = async () => {
     }
 };
 
-export const saveAccount = async (accountData) => {g
+export const saveAccount = async (accountData) => {
     try {
 
         const response = await fetch(API_URLS.SAVE_ACCOUNT, {
