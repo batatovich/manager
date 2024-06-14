@@ -1,0 +1,39 @@
+.accounts-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accounts-header button {
+    margin-left: auto;
+  }
+  
+  .table-section {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .table-section table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-section th,
+  .table-section td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table-section th {
+    background-color: #f0f0f0;
+    text-align: left;
+  }
+  
+  .table-section tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  

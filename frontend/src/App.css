@@ -1,0 +1,77 @@
+.app {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.app-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-title {
+    margin: 0;
+}
+
+.tabs-container {
+    margin-top: 20px;
+}
+
+.tab-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px; /* Added padding to create space between tab headers and button */
+}
+
+.new-entry-button {
+    margin-bottom: 10px;
+    margin-left: auto;
+}
+
+.table-section {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.table-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-section th,
+.table-section td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-section th {
+    background-color: #f0f0f0;
+    text-align: left;
+}
+
+.table-section tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tab-content {
+    padding: 5px;
+}
+
+.table-header {
+    display: none; /* Remove any obsolete styles for the old button placement */
+}

@@ -1,0 +1,22 @@
+/* Modal content */
+.custom-modal-content {
+  background-color: #6358584a; /* White background */
+  color: #333333; /* Dark text color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+}
+
+/* Modal header */
+.custom-modal-header {
+  background-color: #007bff; /* Primary color for header */
+  color: #ffffff; /* White text color */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.custom-modal-body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+}

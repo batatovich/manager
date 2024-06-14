@@ -1,0 +1,46 @@
+/* Apply a "chubby" font style */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+
+.table-header {
+    display: none;
+    /* Remove any obsolete styles for the old button placement */
+}
+
+
+.type-cell {
+    font-family: 'Poppins', sans-serif !important;
+    /* Chubby, modern font */
+    font-weight: 600 !important;
+    /* Make the font weight bold */
+    color: white !important;
+    /* Change font color to white */
+    padding: 10px !important;
+    text-align: center;
+    /* Center the text horizontally */
+}
+
+/* Cozy red background for "Expense" type */
+.type-cell.expense {
+    background-color: #e74141;
+    /* Cozy red */
+}
+
+/* Cozy green background for "Income" type */
+.type-cell.income {
+    background-color: #31b731;
+    /* Cozy green */
+}
+
+
+.table-cell {
+    max-width: 200px;
+    /* Adjust the max-width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tab-content {
+    padding-top: 0.5rem;
+}
