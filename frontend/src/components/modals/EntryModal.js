@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import './EntryModal.css';
 
-const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) => {
+const EntryModal = ({ isOpen, onClose, entryData = {}, handleChange, handleSave }) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -11,11 +11,11 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
 
   const validateForm = (data) => {
     const isValid =
-      data.counterparty.trim() !== '' &&
-      data.asset.trim() !== '' &&
-      data.amount > 0 &&
-      data.creationdate.trim() !== '' &&
-      data.completiondate.trim() !== '';
+      data?.counterparty?.trim() !== '' &&
+      data?.asset?.trim() !== '' &&
+      data?.amount > 0 &&
+      data?.creationdate?.trim() !== '' &&
+      data?.completiondate?.trim() !== '';
     setIsFormValid(isValid);
   };
 
@@ -50,7 +50,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
                 <Form.Control
                   type="text"
                   name="counterparty"
-                  value={entryData.counterparty}
+                  value={entryData.counterparty || ''}
                   onChange={handleChange}
                   required
                 />
@@ -64,7 +64,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
                 <Form.Control
                   type="text"
                   name="asset"
-                  value={entryData.asset}
+                  value={entryData.asset || ''}
                   onChange={handleChange}
                   required
                 />
@@ -76,7 +76,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
                 <Form.Control
                   type="number"
                   name="amount"
-                  value={entryData.amount}
+                  value={entryData.amount || ''}
                   onChange={handleChange}
                   required
                 />
@@ -90,7 +90,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
                 <Form.Control
                   type="date"
                   name="creationdate"
-                  value={entryData.creationdate}
+                  value={entryData.creationdate || ''}
                   onChange={handleChange}
                   required
                 />
@@ -102,7 +102,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
                 <Form.Control
                   type="date"
                   name="completiondate"
-                  value={entryData.completiondate}
+                  value={entryData.completiondate || ''}
                   onChange={handleChange}
                   required
                 />
@@ -114,7 +114,7 @@ const EntryModal = ({ isOpen, onClose, entryData, handleChange, handleSave }) =>
             <Form.Control
               as="textarea"
               name="observations"
-              value={entryData.observations}
+              value={entryData.observations || ''}
               onChange={handleChange}
             />
           </Form.Group>

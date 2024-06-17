@@ -1,39 +1,13 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Button } from 'react-bootstrap';
+import { Tabs, Tab} from 'react-bootstrap';
 import Log from './components/Entries';
 import Accounts from './components/Accounts';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './images/logo.webp';
-import useEntryModal from './hooks/useEntryModal';
-import useAccountModal from './hooks/useAccountModal';
-import EntryModal from './components/modals/EntryModal';
-import AccountModal from './components/modals/AccountModal';
 
 const App = () => {
-  const [entries, setEntries] = useState([]);
-  const [accounts, setAccounts] = useState([]);
   const [key, setKey] = useState('entries');
-
-  const {
-    isEntryModalOpen,
-    entryData,
-    handleNew: handleNewEntry,
-    handleEdit: handleEditEntry,
-    handleClose: handleCloseEntry,
-    handleChange: handleChangeEntry,
-    handleSave: handleSaveEntry
-  } = useEntryModal(setEntries);
-
-  const {
-    isAccountModalOpen,
-    accountData,
-    handleNew: handleNewAccount,
-    handleEdit: handleEditAccount,
-    handleClose: handleCloseAccount,
-    handleChange: handleChangeAccount,
-    handleSave: handleSaveAccount
-  } = useAccountModal(setAccounts);
 
   return (
     <div className="app">
@@ -50,36 +24,16 @@ const App = () => {
         >
           <Tab eventKey="entries" title="Log Book">
             <div className="tab-content-wrapper">
-              <Button variant="primary" onClick={handleNewEntry} className="new-entry-button">
-                New Entry
-              </Button>
-              <Log entries={entries} setEntries={setEntries} handleEdit={handleEditEntry} />
+              <Log />
             </div>
           </Tab>
           <Tab eventKey="accounts" title="Accounts">
             <div className="tab-content-wrapper">
-              <Button variant="primary" onClick={handleNewAccount} className="new-account-button">
-                New Account
-              </Button>
-              <Accounts accounts={accounts} setAccounts={setAccounts} handleEdit={handleEditAccount} />
+              <Accounts />
             </div>
           </Tab>
         </Tabs>
       </div>
-      <EntryModal
-        isOpen={isEntryModalOpen}
-        onClose={handleCloseEntry}
-        entryData={entryData}
-        handleChange={handleChangeEntry}
-        handleSave={handleSaveEntry}
-      />
-      <AccountModal
-        isOpen={isAccountModalOpen}
-        onClose={handleCloseAccount}
-        accountData={accountData}
-        handleChange={handleChangeAccount}
-        handleSave={handleSaveAccount}
-      />
     </div>
   );
 };
