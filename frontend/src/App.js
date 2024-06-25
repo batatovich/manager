@@ -1,40 +1,46 @@
 import React, { useState } from 'react';
-import { Tabs, Tab} from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 import Log from './components/Entries';
 import Accounts from './components/Accounts';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from './images/logo.webp';
+import { AccountModalProvider } from './contexts/AccountModalContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const [key, setKey] = useState('entries');
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <img src={logo} className="App-logo" alt="logo" width={100} height={100} />
-        <h1 className="app-title">Budget Buddy</h1>
-      </header>
-      <div className="tabs-container">
-        <Tabs
-          id="budget-buddy-tabs"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-          className="tabs"
-        >
-          <Tab eventKey="entries" title="Log Book">
-            <div className="tab-content-wrapper">
-              <Log />
-            </div>
-          </Tab>
-          <Tab eventKey="accounts" title="Accounts">
-            <div className="tab-content-wrapper">
-              <Accounts />
-            </div>
-          </Tab>
-        </Tabs>
+    <QueryClientProvider client={queryClient}>
+      <div className="app">
+        <header className="app-header">
+          <h2 className="app-title">Budget Buddy</h2>
+        </header>
+        <div className="tabs-container">
+          <Tabs
+            id="budget-buddy-tabs"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="tabs"
+          >
+            <Tab eventKey="entries" title="Log Book">
+              <div className="tab-content-wrapper">
+                <Log />
+              </div>
+            </Tab>
+            <Tab eventKey="accounts" title="Accounts">
+              <AccountModalProvider>
+                <div className="tab-content-wrapper">
+                  <Accounts />
+                </div>
+              </AccountModalProvider>
+            </Tab>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 };
 

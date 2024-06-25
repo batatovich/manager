@@ -1,31 +1,43 @@
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-  }
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+.custom-modal-content .modal-dialog {
+  max-width: 400px;
+  /* Reduce the width of the modal */
+}
+
+.custom-modal-header {
+  background-color: #007bff;
+  color: white;
+}
+
+.custom-modal-body {
+  padding: 20px 20px 10px 20px; /* Reduce the bottom padding */
+  max-height: 275px;
+}
+
+.custom-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Adjust this value to change the space between buttons */
+  padding: 10px 20px; /* Adjust the padding to reduce whitespace */
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.d-flex {
+  display: flex !important;
+}

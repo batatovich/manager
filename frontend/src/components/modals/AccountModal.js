@@ -1,28 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
-import './AccountModal.css'; 
+import { useAccountModal } from '../../contexts/AccountModalContext';
+import './AccountModal.css';
 import { AccountTypes } from '../../utils/enums';
 
-const AccountModal = ({ isOpen, onClose, accountData, handleChange, handleSave }) => {
-  const [isFormValid, setIsFormValid] = useState(false);
+const AccountModal = () => {
+  const queryClient = useQueryClient();
+  const { isAccountModalOpen, accountData, closeModal, handleChange, handleSave } = useAccountModal();
+  const [formValidated, setFormValidated] = useState(false);
+  const [nameError, setNameError] = useState('');
 
-  useEffect(() => {
-    validateForm(accountData);
-  }, [accountData]);
+  const isNameUnique = (name) => {
+    const accounts = queryClient.getQueryData(['accounts']) || [];
+    return !accounts.some(account => account.name === name && account.id !== accountData.id);
+  };
 
-  const validateForm = (data) => {
-    const isValid = data.name.trim() !== '' && data.type.trim() !== '';
-    setIsFormValid(isValid);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (isNameUnique(accountData.name)) {
+      if (form.checkValidity()) {
+        handleSave();
+        setFormValidated(false);
+      } else {
+        e.stopPropagation();
+        setNameError('Account name is mandatory!');
+        setFormValidated(true);
+      }
+    } else {
+      e.stopPropagation();
+      setNameError('Account name already exists!');
+      setFormValidated(true);
+    }
+  };
+
+  const handleClose = () => {
+    closeModal();
+    setFormValidated(false);
+    setNameError('');
   };
 
   return (
-    <Modal show={isOpen} onHide={onClose} className="custom-modal-content">
+    <Modal show={isAccountModalOpen} onHide={handleClose} className="custom-modal-content">
       <Modal.Header closeButton className="custom-modal-header">
         <Modal.Title>{accountData.id ? 'Edit Account' : 'New Account'}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="custom-modal-body">
-        <Form onSubmit={handleSave}>
-          <Row>
+        <Form noValidate validated={formValidated} onSubmit={handleSubmit}>
+          <Row className="mb-3">
             <Col>
               <Form.Group controlId="name">
                 <Form.Label>Name:</Form.Label>
@@ -33,9 +59,15 @@ const AccountModal = ({ isOpen, onClose, accountData, handleChange, handleSave }
                   onChange={handleChange}
                   placeholder="Account Name"
                   required
+                  isInvalid={!!nameError}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {nameError || 'Please provide a name.'}
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
+          </Row>
+          <Row className="mb-3">
             <Col>
               <Form.Group controlId="type">
                 <Form.Label>Type:</Form.Label>
@@ -46,26 +78,29 @@ const AccountModal = ({ isOpen, onClose, accountData, handleChange, handleSave }
                   onChange={handleChange}
                   required
                 >
-                  <option value="" style={{ opacity: 0.5 }}>Select a type</option>
+                  <option value="">Select a type</option>
                   {AccountTypes.map((type) => (
                     <option key={type} value={type}>
                       {type}
                     </option>
                   ))}
                 </Form.Control>
+                <Form.Control.Feedback type="invalid">
+                  Account type is mandatory.
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>
+          <Modal.Footer className="custom-modal-footer">
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          Close
-        </Button>
-        <Button variant="primary" type="submit" onClick={handleSave} disabled={!isFormValid}>
-          Save
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };
