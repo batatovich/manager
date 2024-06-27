@@ -46,13 +46,13 @@ const editAccount = async (req, res) => {
 };
 
 const deleteAccount = async (req, res) => {
+    const id = req.params.id;
     try {
-        const id = req.params.id;
         const account = await accountService.deleteAccount(id);
         res.status(200).json(account);
     } catch (error) {
         console.error('account-controller > deleteAccount: Error deleting account from database!', error.message);
-        res.status(500).json({ error: `Error deleting account from database with id ${id}` });
+        res.status(400).json({ error: error.message });
     }
 };
 

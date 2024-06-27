@@ -51,13 +51,13 @@ const AccountModal = () => {
           <Row className="mb-3">
             <Col>
               <Form.Group controlId="name">
-                <Form.Label>Name:</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
                   value={accountData.name}
                   onChange={handleChange}
-                  placeholder="Account Name"
+                  placeholder="Enter a unique account name"
                   required
                   isInvalid={!!nameError}
                 />
@@ -70,7 +70,7 @@ const AccountModal = () => {
           <Row className="mb-3">
             <Col>
               <Form.Group controlId="type">
-                <Form.Label>Type:</Form.Label>
+                <Form.Label>Type</Form.Label>
                 <Form.Control
                   as="select"
                   name="type"
@@ -78,7 +78,9 @@ const AccountModal = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select a type</option>
+                  <option value="" disabled hidden style={{ opacity: 0.1 }}>
+                    Select an account type
+                  </option>
                   {AccountTypes.map((type) => (
                     <option key={type} value={type}>
                       {type}
@@ -95,7 +97,7 @@ const AccountModal = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="success" type="submit">
               Save
             </Button>
           </Modal.Footer>

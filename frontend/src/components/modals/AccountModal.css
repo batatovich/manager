@@ -1,17 +1,3 @@
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-}
-
 .custom-modal-content .modal-dialog {
   max-width: 400px;
   /* Reduce the width of the modal */
@@ -24,7 +10,7 @@
 
 .custom-modal-body {
   padding: 20px 20px 10px 20px; /* Reduce the bottom padding */
-  max-height: 275px;
+  max-height: 300px;
 }
 
 .custom-modal-footer {
@@ -40,4 +26,18 @@
 
 .d-flex {
   display: flex !important;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
 }

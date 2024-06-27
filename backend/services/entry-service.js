@@ -10,13 +10,13 @@ const entryService = {
         const table = process.env.DB_ENTRIES_TABLE;
         const schema = process.env.DB_SCHEMA;
         const query = `
-        INSERT INTO ${schema}.${table} (type, amount, asset, creationdate, completiondate, counterparty, observations)
+        INSERT INTO ${schema}.${table} (type, amount, asset, completiondate, counterparty, observations, account_id)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING *;`;
         try {
             const client = await pool.connect();
-            const { type, amount, asset, creationdate, completiondate, counterparty, observations } = entryData;
-            const values = [type, amount, asset, creationdate, completiondate, counterparty, observations];
+            const { type, amount, asset, account_id, completiondate, counterparty, observations } = entryData;
+            const values = [type, amount, asset, completiondate, counterparty, observations, account_id];
             const entry = await client.query(query, values);
             client.release();
             return entry.rows[0];
@@ -57,9 +57,9 @@ const entryService = {
                 counterparty = $2,
                 asset = $3,
                 amount = $4,
-                creationdate = $5,
-                completiondate = $6,
-                observations = $7
+                completiondate = $5,
+                observations = $6,
+                account_id = $7
             WHERE id = $8
             RETURNING *;
         `;
@@ -70,9 +70,9 @@ const entryService = {
                 entryData.counterparty,
                 entryData.asset,
                 entryData.amount,
-                entryData.creationdate,
                 entryData.completiondate,
                 entryData.observations,
+                entryData.account_id,
                 entryData.id
             ]);
             client.release();

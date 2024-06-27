@@ -5,6 +5,7 @@ import Accounts from './components/Accounts';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AccountModalProvider } from './contexts/AccountModalContext';
+import { EntryModalProvider } from './contexts/EntryModalContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
@@ -26,9 +27,11 @@ const App = () => {
             className="tabs"
           >
             <Tab eventKey="entries" title="Log Book">
-              <div className="tab-content-wrapper">
-                <Log />
-              </div>
+              <EntryModalProvider>
+                <div className="tab-content-wrapper">
+                  <Log />
+                </div>
+              </EntryModalProvider>
             </Tab>
             <Tab eventKey="accounts" title="Accounts">
               <AccountModalProvider>

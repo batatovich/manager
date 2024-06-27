@@ -75,19 +75,26 @@ const accountService = {
 
     // Delete account from the database using unique id
     deleteAccount: async (id) => {
-        const table = process.env.DB_ACCOUNTS_TABLE;
+        const accounts_table = process.env.DB_ACCOUNTS_TABLE;
+        const entries_table = process.env.DB_ENTRIES_TABLE;
         const schema = process.env.DB_SCHEMA;
-        const query = `
-          DELETE FROM ${schema}.${table}
-          WHERE id = $1;`;
+    
+        let client;
         try {
-            const client = await pool.connect();
-            await client.query(query, [id]);
-            client.release();
-
+            client = await pool.connect();
+            const result = await client.query(`SELECT COUNT(*) FROM ${schema}.${entries_table} WHERE account_id = $1;`, [id]);
+            if (parseInt(result.rows[0].count, 10) > 0) {
+                throw new Error('The account has associated entries and cannot be deleted.');
+            }
+            await client.query(`DELETE FROM ${schema}.${accounts_table} WHERE id = $1;`, [id]);
+    
         } catch (error) {
             console.error('account-service | deleteAccount: Error deleting account by ID:', error.message);
             throw error;
+        } finally {
+            if (client) {
+                client.release();
+            }
         }
     },
 

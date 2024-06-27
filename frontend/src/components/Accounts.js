@@ -23,6 +23,8 @@ const Accounts = () => {
     },
     onError: (error) => {
       console.error('Error deleting account:', error);
+      const errorMessage = error.response?.data?.error || 'An unexpected error occurred';
+      alert(`Error deleting account: ${errorMessage}`);
     },
   });
 
@@ -31,17 +33,18 @@ const Accounts = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={() => openModal()}>
-        New Account
-      </Button>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>Name</th>
             <th>Type</th>
             <th>Balance</th>
-            <th>Created At</th>
-            <th></th>
+            <th>Creation Date</th>
+            <th>
+              <Button variant="primary" onClick={() => openModal()}>
+                New Account
+              </Button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +64,7 @@ const Accounts = () => {
                     placement="top"
                     overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
                   >
-                    <Button variant="danger" size="sm" onClick={() => deleteMutation.mutate(account.id)}>
+                    <Button variant="light" size="sm" onClick={() => deleteMutation.mutate(account.id)}>
                       <FaTrash />
                     </Button>
                   </OverlayTrigger>
@@ -70,7 +73,7 @@ const Accounts = () => {
                     placement="top"
                     overlay={<Tooltip id="edit-tooltip">Edit</Tooltip>}
                   >
-                    <Button variant="primary" size="sm" onClick={() => openModal(account)}>
+                    <Button variant="light" size="sm" onClick={() => openModal(account)}>
                       <FaEdit />
                     </Button>
                   </OverlayTrigger>
