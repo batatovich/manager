@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { saveAccount, editAccount } from '../api';
+import { formatText } from '../utils/helpers';
 
 // Create a context for the Account Modal
 const AccountModalContext = createContext();
@@ -31,7 +32,6 @@ export const AccountModalProvider = ({ children }) => {
     const { name, value } = e.target;
     setAccountData((prevData) => ({ ...prevData, [name]: value }));
   };
-
   // Mutation for saving a new account
   const saveMutation = useMutation({
     mutationFn: saveAccount,
@@ -62,10 +62,16 @@ export const AccountModalProvider = ({ children }) => {
 
   // Function to handle saving account data (either new or existing)
   const handleSave = () => {
+    const formattedAccountData = {
+      ...accountData,
+      name: formatText(accountData.name),
+      type: formatText(accountData.type)
+    };
+
     if (!accountData.id) {
-      saveMutation.mutate(accountData); // Save new account
+      saveMutation.mutate(formattedAccountData); // Save new account
     } else {
-      editMutation.mutate(accountData); // Edit existing account
+      editMutation.mutate(formattedAccountData); // Edit existing account
     }
   };
 

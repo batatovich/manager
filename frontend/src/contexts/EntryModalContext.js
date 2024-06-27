@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { saveEntry, editEntry } from '../api';
-import { formatDateForInput } from '../utils/helpers';
+import { formatDate, formatText } from '../utils/helpers';
 
 const defaultData = {
     type: 'Expense',
@@ -29,8 +29,8 @@ export const EntryModalProvider = ({ children }) => {
     const openModal = (entry = defaultData) => {
         const formattedEntry = {
             ...entry,
-            completiondate: formatDateForInput(entry.completiondate),
-            creationdate: formatDateForInput(entry.creationdate),
+            completiondate: formatDate(entry.completiondate),
+            creationdate: formatDate(entry.creationdate),
           };
         setEntryData(formattedEntry);
         setIsEntryModalOpen(true);
@@ -76,10 +76,17 @@ export const EntryModalProvider = ({ children }) => {
 
     // Function to handle saving entry data (either new or existing)
     const handleSave = () => {
+        const formattedEntryData = {
+            ...entryData,
+            asset: formatText(entryData.asset),
+            counterparty: formatText(entryData.counterparty),
+            observations: formatText(entryData.observations),
+          };
+      
         if (!entryData.id) {
-            saveMutation.mutate(entryData); // Save new entry
+            saveMutation.mutate(formattedEntryData); // Save new entry
         } else {
-            editMutation.mutate(entryData); // Edit existing entry
+            editMutation.mutate(formattedEntryData); // Edit existing entry
         }
     };
 

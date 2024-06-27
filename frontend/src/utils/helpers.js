@@ -1,8 +1,4 @@
-export const formatDate = (isoString) => {
-    return isoString ? isoString.split('T')[0] : '';
-};
-
-export const formatDateForInput = (dateString) => {
+export const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -10,3 +6,9 @@ export const formatDateForInput = (dateString) => {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
+
+export const formatText = (input) => {
+    return input
+        .trim() // Remove spaces at the beginning and end
+        .replace(/\s+/g, ' '); // Replace multiple spaces with a single space
+};

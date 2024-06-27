@@ -13,7 +13,6 @@ const EntryModal = () => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity()) {
-      console.log(entryData);
       handleSave();
       setFormValidated(false);
     } else {
