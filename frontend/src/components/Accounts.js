@@ -38,7 +38,6 @@ const Accounts = () => {
           <tr>
             <th>Name</th>
             <th>Type</th>
-            <th>Balance</th>
             <th>Creation Date</th>
             <th>
               <Button variant="primary" onClick={() => openModal()}>
@@ -50,14 +49,13 @@ const Accounts = () => {
         <tbody>
           {accounts.length === 0 ? (
             <tr>
-              <td colSpan="5">No accounts found.</td>
+              <td colSpan="4">No accounts found.</td>
             </tr>
           ) : (
             accounts.slice().reverse().map((account, index) => (
               <tr key={index}>
                 <td>{account.name}</td>
                 <td>{account.type}</td>
-                <td>{account.balance}</td>
                 <td>{account.createdat}</td>
                 <td>
                   <OverlayTrigger

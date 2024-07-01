@@ -35,22 +35,3 @@ const entryData = {
 };
 
 const apiUrl = 'http://localhost:3000/api/entries/saveEntry'; // Adjust the URL based on your server configuration
-
-/*
-fetch(apiUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(entryData)
-})
-  .then(response => response.json())
-  .then(data => {
-    console.log('Received response from backend:', data);
-    // Handle response data as needed
-  })
-  .catch(error => {
-    console.error('Error sending POST request:', error);
-    // Handle error
-  }); 
-  */

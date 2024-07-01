@@ -22,13 +22,13 @@
 
 /* Cozy red background for "Expense" type */
 .type-cell.expense {
-    background-color: #e74141;
+    color: #e74141 !important;
     /* Cozy red */
 }
 
 /* Cozy green background for "Income" type */
 .type-cell.income {
-    background-color: #31b731;
+   color: #31b731 !important;
     /* Cozy green */
 }
 

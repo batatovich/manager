@@ -105,7 +105,7 @@ const entryService = {
     getAllEntries: async () => {
         const table = process.env.DB_ENTRIES_TABLE;
         const schema = process.env.DB_SCHEMA;
-        const query = `SELECT * FROM ${schema}.${table} ORDER BY serial_id ASC;`;
+        const query = `SELECT * FROM ${schema}.${table} ORDER BY creationdate ASC;`;
         try {
             const client = await pool.connect();
             const allEntries = await client.query(query);

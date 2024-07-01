@@ -5,7 +5,8 @@
 .custom-modal-header {
   background-color: #007bff;
   color: white;
-  padding: 0.5rem 1rem; /* Adjusted padding */
+  padding: 0.5rem 1rem;
+  /* Adjusted padding */
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -20,7 +21,8 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 0.5rem 1rem; /* Adjusted padding */
+  padding: 0.5rem 1rem;
+  /* Adjusted padding */
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -45,4 +47,15 @@
 .close:focus {
   color: black;
   text-decoration: none;
+}
+
+.custom-modal-content .was-validated .form-control:valid,
+.custom-modal-content .form-control.is-valid {
+  background-image: none;
+}
+
+/* Ensure the labels do not turn green */
+.custom-modal-content .was-validated .form-check-input:valid ~ .form-check-label,
+.custom-modal-content .form-check-input.is-valid ~ .form-check-label {
+  color: inherit; /* Default text color */
 }

@@ -6,6 +6,7 @@ import { fetchAllEntries, deleteEntry } from '../api';
 import EntryModal from './modals/EntryModal';
 import { fetchAllAccounts } from '../api';
 import { useEntryModal } from '../contexts/EntryModalContext';
+import { formatDate } from '../utils/helpers';
 import './Entries.css';
 
 const Log = () => {
@@ -73,8 +74,8 @@ const Log = () => {
                 <td>{entry.amount}</td>
                 <td>{accountLookup[entry.account_id]}</td>
                 <td>{entry.counterparty}</td>
-                <td>{entry.creationdate}</td>
-                <td>{entry.completiondate}</td>
+                <td>{formatDate(entry.creationdate)}</td>
+                <td>{formatDate(entry.completiondate)}</td>
                 <td className='table-cell'>{entry.observations}</td>
                 <td>
                   <OverlayTrigger

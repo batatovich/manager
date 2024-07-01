@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const dotenv = require('dotenv');
 const entryRouter = require('./routers/entry-router');
-const accountRouter = require('./routers/account-router'); // Import the account router
+const accountRouter = require('./routers/account-router'); 
+const userRouter = require('./routers/user-router'); 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 CLIENT_PORT = 5000;
@@ -22,7 +23,8 @@ app.use(bodyParser.json());
 
 // Set up routes
 app.use('/api/entries', entryRouter);
-app.use('/api/accounts', accountRouter); // Add this line to include account routes
+app.use('/api/accounts', accountRouter);
+app.use('/api/users', userRouter);
 
 // Start the server
 const PORT = process.env.SERVER_PORT || 3000; // Add a fallback port in case SERVER_PORT is not defined
