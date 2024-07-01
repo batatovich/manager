@@ -17,7 +17,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <div className="app">
         <header className="app-header">
-          <h2 className="app-title">Budget Buddy</h2>
+          <h2 className="app-title">Manager</h2>
         </header>
         <div className="tabs-container">
           <Tabs

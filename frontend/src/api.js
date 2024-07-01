@@ -8,6 +8,8 @@ const axiosInstance = axios.create({
   },
 });
 
+//ENTRIES
+
 // POST request to save an entry to database. Returns the saved entry.
 export const saveEntry = async (entryData) => {
   try {
@@ -51,6 +53,8 @@ export const fetchAllEntries = async () => {
   }
 };
 
+// ACCOUNTS
+
 export const saveAccount = async (accountData) => {
   try {
     const response = await axiosInstance.post(API_URLS.SAVE_ACCOUNT, accountData);
@@ -89,5 +93,28 @@ export const fetchAllAccounts = async () => {
     throw error;
   }
 };
+
+// USERS
+
+export const register = async (email, password) => {
+  try {
+    const response = await axiosInstance.post(API_URLS.REGISTER_USER, { email, password })
+    return response.data;
+  } catch (error) {
+    console.error('Registration error', error);
+    throw error;
+  }
+};
+
+export const login = async (email, password) => {
+  try {
+    const response = await axiosInstance.put(API_URLS.LOGIN_USER, { email, password })
+    return response.data;
+  } catch (error) {
+    console.error('Authentication error', error);
+    throw error;
+  }
+};
+
 
 export default axiosInstance;

@@ -9,4 +9,8 @@ export const API_URLS = {
   EDIT_ACCOUNT: '/accounts/edit',
   DELETE_ACCOUNT: '/accounts/delete',
   GET_ALL_ACCOUNTS: '/accounts/all',
+  REGISTER_USER: '/users/register',
+  LOGIN_USER: '/users/login',
+  GET_USER: '/users/get',
+  DELETE_USER: '/users/delete'
 };
