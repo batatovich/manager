@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { login } from '../api';
+import './Login.css'; // Import the CSS file
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,16 +12,17 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', { email, password });
-      localStorage.setItem('token', response.data.token);
+      const response = await login(email, password);
+      localStorage.setItem('token', response.token);
       navigate('/dashboard');
     } catch (err) {
-      setError('Invalid email or password.');
+      console.log(error)
+      setError('Authentication error');
     }
   };
 
   return (
-    <div>
+    <div className="login-container">
       <form onSubmit={handleLogin}>
         <div>
           <label>Email</label>
@@ -40,7 +42,7 @@ const Login = () => {
             required
           />
         </div>
-        {error && <div>{error}</div>}
+        {error && <div className="error">{error}</div>}
         <button type="submit">Login</button>
       </form>
     </div>

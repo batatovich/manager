@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAllAccounts, deleteAccount } from '../api';
 import AccountModal from './modals/AccountModal';
 import { useAccountModal } from '../contexts/AccountModalContext';
-import './Accounts.css';
+//import './Accounts.css';
 
 const Accounts = () => {
   const queryClient = useQueryClient();

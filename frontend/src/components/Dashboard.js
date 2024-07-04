@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
+import { Tabs, Tab, Button } from 'react-bootstrap';
 import Log from './Entries';
 import Accounts from './Accounts';
 import { AccountModalProvider } from '../contexts/AccountModalContext';
 import { EntryModalProvider } from '../contexts/EntryModalContext';
+import { useNavigate } from 'react-router-dom';
+//import './Dashboard.css';
 
 const Dashboard = () => {
     const [key, setKey] = useState('entries');
+    const navigate = useNavigate();
+    const signOut = async () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
 
     return (
         <div className="dashboard">
             <header className="dashboard-header">
                 <h2 className="dashboard-title">Manager</h2>
+                <Button variant='light' onClick={() => signOut()}>Sign out</Button>
             </header>
             <div className="tabs-container">
                 <Tabs

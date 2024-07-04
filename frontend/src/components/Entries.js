@@ -7,7 +7,7 @@ import EntryModal from './modals/EntryModal';
 import { fetchAllAccounts } from '../api';
 import { useEntryModal } from '../contexts/EntryModalContext';
 import { formatDate } from '../utils/helpers';
-import './Entries.css';
+//import './Entries.css';
 
 const Log = () => {
   const queryClient = useQueryClient();
