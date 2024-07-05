@@ -22,9 +22,9 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Set up routes
+app.use('/api/users', userRouter);
 app.use('/api/entries', entryRouter);
 app.use('/api/accounts', accountRouter);
-app.use('/api/users', userRouter);
 
 // Start the server
 const PORT = process.env.SERVER_PORT || 3000; // Add a fallback port in case SERVER_PORT is not defined

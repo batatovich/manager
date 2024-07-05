@@ -45,7 +45,9 @@ export const deleteEntry = async (id) => {
 // GET request to get all entries stored in database. Returns an array of entries.
 export const fetchAllEntries = async () => {
   try {
-    const response = await axiosInstance.get(API_URLS.GET_ALL_ENTRIES);
+    const token = localStorage.getItem('token');
+    const response = await axiosInstance.get(API_URLS.GET_ALL_ENTRIES, {
+      headers: { Authorization: `Bearer ${token}`}});
     return response.data;
   } catch (error) {
     console.error('Error fetching entries:', error);
@@ -57,7 +59,9 @@ export const fetchAllEntries = async () => {
 
 export const saveAccount = async (accountData) => {
   try {
-    const response = await axiosInstance.post(API_URLS.SAVE_ACCOUNT, accountData);
+    const token = localStorage.getItem('token');
+    const response = await axiosInstance.post(API_URLS.SAVE_ACCOUNT, accountData, {
+      headers: { Authorization: `Bearer ${token}`}});
     return response.data;
   } catch (error) {
     console.error('Error saving account:', error);
@@ -67,7 +71,9 @@ export const saveAccount = async (accountData) => {
 
 export const editAccount = async (accountData) => {
   try {
-    const response = await axiosInstance.put(API_URLS.EDIT_ACCOUNT, accountData);
+    const token = localStorage.getItem('token');
+    const response = await axiosInstance.put(API_URLS.EDIT_ACCOUNT, accountData, {
+      headers: { Authorization: `Bearer ${token}`}});
     return response.data;
   } catch (error) {
     console.error('Error editing account:', error);
@@ -77,7 +83,9 @@ export const editAccount = async (accountData) => {
 
 export const deleteAccount = async (id) => {
   try {
-    await axiosInstance.delete(`${API_URLS.DELETE_ACCOUNT}/${id}`);
+    const token = localStorage.getItem('token');
+    await axiosInstance.delete(`${API_URLS.DELETE_ACCOUNT}/${id}`, {
+      headers: { Authorization: `Bearer ${token}`}});
   } catch (error) {
     console.error('Error deleting account:', error.message);
     throw error;
@@ -86,7 +94,9 @@ export const deleteAccount = async (id) => {
 
 export const fetchAllAccounts = async () => {
   try {
-    const response = await axiosInstance.get(API_URLS.GET_ALL_ACCOUNTS);
+    const token = localStorage.getItem('token'); 
+    const response = await axiosInstance.get(API_URLS.GET_ALL_ACCOUNTS, {
+      headers: { Authorization: `Bearer ${token}`}});
     return response.data;
   } catch (error) {
     console.error('Error fetching accounts:', error);

@@ -6,15 +6,9 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const saveAccount = async (req, res) => {
     try {
-
-        // Validate request body using Joi schema
-        const { error, value } = newAccountSchema.validate(req.body);
-        if (error) {
-            return res.status(400).send({ message: error.details[0].message });
-        }
-
         // If validation is successful, pass the validated value to the service
-        const savedAccount = await accountService.saveAccount(value);
+        const accountData = { ...req.body, user_id: req.user.id };
+        const savedAccount = await accountService.saveAccount(accountData);
         res.status(200).json(savedAccount);
 
     } catch (error) {
@@ -25,19 +19,17 @@ const saveAccount = async (req, res) => {
 
 const getAccount = async (req, res) => {
     try {
-        const { id } = req.body;
-        const account = await accountService.getAccount(id);
+        const account = await accountService.getAccount(req.body.id, req.user.id);
         res.status(200).json(account);
     } catch (error) {
         console.error('account-controller > getAccount: Error fetching account from database!', error.message);
-        res.status(500).json({ error: `Error fetching account from database with id ${id}` });
+        res.status(500).json({ error: `Error fetching account from database with id ${req.body.id}` });
     }
 };
 
 const editAccount = async (req, res) => {
     try {
-        const accountData = req.body;
-        const account = await accountService.editAccount(accountData);
+        const account = await accountService.editAccount(req.body, req.user.id);
         res.status(200).json(account);
     } catch (error) {
         console.error('account-controller > editAccount: Error saving account modifications!', error.message);
@@ -46,9 +38,8 @@ const editAccount = async (req, res) => {
 };
 
 const deleteAccount = async (req, res) => {
-    const id = req.params.id;
     try {
-        const account = await accountService.deleteAccount(id);
+        const account = await accountService.deleteAccount(req.params.id, req.user.id);
         res.status(200).json(account);
     } catch (error) {
         console.error('account-controller > deleteAccount: Error deleting account from database!', error.message);
@@ -58,7 +49,7 @@ const deleteAccount = async (req, res) => {
 
 const getAllAccounts = async (req, res) => {
     try {
-        const accounts = await accountService.getAllAccounts();
+        const accounts = await accountService.getAllAccounts(req.user.id);
         res.status(200).json(accounts);
     } catch (error) {
         console.error('account-controller > getAllAccounts: Error fetching accounts!', error.message);

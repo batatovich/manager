@@ -10,13 +10,13 @@ const accountService = {
         const table = process.env.DB_ACCOUNTS_TABLE;
         const schema = process.env.DB_SCHEMA;
         const query = `
-        INSERT INTO ${schema}.${table} (name, type)
-        VALUES ($1, $2)
+        INSERT INTO ${schema}.${table} (name, type, user_id)
+        VALUES ($1, $2, $3)
         RETURNING *;`;
         try {
             const client = await pool.connect();
-            const { name, type } = accountData;
-            const values = [name, type];
+            const { name, type, user_id } = accountData; 
+            const values = [name, type, user_id];
             const account = await client.query(query, values);
             client.release();
             return account.rows[0];
@@ -28,15 +28,15 @@ const accountService = {
     },
 
     // Get account from database by unique id
-    getAccount: async (id) => {
+    getAccount: async (account_id, user_id) => {
         const table = process.env.DB_ACCOUNTS_TABLE;
         const schema = process.env.DB_SCHEMA;
         const query = `
         SELECT * FROM ${schema}.${table}
-        WHERE id = $1;`;
+        WHERE id = $1 AND user_id = $2;`;
         try {
             const client = await pool.connect();
-            const account = await client.query(query, [id]);
+            const account = await client.query(query, [account_id, user_id]);
             client.release();
             return account.rows[0]; // Return the found account
 
@@ -47,7 +47,7 @@ const accountService = {
     },
 
     // Edit account using account data provided by the frontend
-    editAccount: async (accountData) => {
+    editAccount: async (accountData, user_id) => {
         const table = process.env.DB_ACCOUNTS_TABLE;
         const schema = process.env.DB_SCHEMA;
         const query = `
@@ -55,7 +55,7 @@ const accountService = {
             SET 
                 name = $1,
                 type = $2
-            WHERE id = $3
+            WHERE id = $3 AND user_id = $4
             RETURNING *;
         `;
         try {
@@ -63,7 +63,8 @@ const accountService = {
             const result = await client.query(query, [
                 accountData.name,
                 accountData.type,
-                accountData.id
+                accountData.id,
+                user_id
             ]);
             client.release();
             return result.rows[0];
@@ -74,7 +75,7 @@ const accountService = {
     },
 
     // Delete account from the database using unique id
-    deleteAccount: async (id) => {
+    deleteAccount: async (account_id, user_id) => {
         const accounts_table = process.env.DB_ACCOUNTS_TABLE;
         const entries_table = process.env.DB_ENTRIES_TABLE;
         const schema = process.env.DB_SCHEMA;
@@ -82,11 +83,11 @@ const accountService = {
         let client;
         try {
             client = await pool.connect();
-            const result = await client.query(`SELECT COUNT(*) FROM ${schema}.${entries_table} WHERE account_id = $1;`, [id]);
+            const result = await client.query(`SELECT COUNT(*) FROM ${schema}.${entries_table} WHERE account_id = $1 AND user_id = $2;`, [account_id, user_id]);
             if (parseInt(result.rows[0].count, 10) > 0) {
                 throw new Error('The account has associated entries and cannot be deleted.');
             }
-            await client.query(`DELETE FROM ${schema}.${accounts_table} WHERE id = $1;`, [id]);
+            await client.query(`DELETE FROM ${schema}.${accounts_table} WHERE id = $1 AND user_id = $2;`, [account_id, user_id]);
     
         } catch (error) {
             console.error('account-service | deleteAccount: Error deleting account by ID:', error.message);
@@ -99,16 +100,16 @@ const accountService = {
     },
 
     // Get all accounts stored in database
-    getAllAccounts: async () => {
+    getAllAccounts: async (user_id) => {
         const table = process.env.DB_ACCOUNTS_TABLE;
         const schema = process.env.DB_SCHEMA;
-        const query = `SELECT * FROM ${schema}.${table} ORDER BY "createdat" ASC;`;
+        const query = `SELECT * FROM ${schema}.${table} WHERE user_id = $1 ORDER BY "createdat" ASC;`;
         try {
             const client = await pool.connect();
-            const allAccounts = await client.query(query);
+            const allAccounts = await client.query(query, [user_id]);
             client.release();
             return allAccounts.rows;
-
+    
         } catch (error) {
             console.error('account-service | getAllAccounts: Error fetching accounts!', error.message);
             throw error;

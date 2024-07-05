@@ -64,9 +64,8 @@ export const AccountModalProvider = ({ children }) => {
   const handleSave = () => {
     const formattedAccountData = {
       ...accountData,
-      name: formatText(accountData.name),
-      type: formatText(accountData.type)
-    };
+      name: formatText(accountData.name)
+      };
 
     if (!accountData.id) {
       saveMutation.mutate(formattedAccountData); // Save new account

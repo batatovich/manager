@@ -48,7 +48,7 @@ const userService = {
             );
             client.release();
 
-            const user = result.rows[0];
+            const user = result.rows[0]; // User = {id, email, password}
             if (!user) {
                 throw new Error('User not found');
             }

@@ -1,6 +1,9 @@
 const express = require('express');
 const accountController = require('../controllers/account-controller');
+const authenticateJWT = require('../middlewares/authenticateJWT'); 
 const router = express.Router();
+
+router.use(authenticateJWT); //Authentication middleware
 
 router.post('/save', accountController.saveAccount);
 router.get('/get/:id', accountController.getAccount);
